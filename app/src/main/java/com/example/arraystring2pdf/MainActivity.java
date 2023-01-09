@@ -1,10 +1,12 @@
 package com.example.arraystring2pdf;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
+import android.widget.Toast;
 
 import com.itextpdf.text.Document;
 import com.itextpdf.text.Paragraph;
@@ -15,8 +17,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
 
+
+    String rootPath;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);  // to disable NIGHT MODE
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -27,13 +33,14 @@ public class MainActivity extends AppCompatActivity {
         stringArrayList.add("This is line 3 of the PDF file.");
 
         // File Path to save PDF file
-        String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download";
+        rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download";
 
         // You can also create no. of file by generating unique name everytime or go with Custom Name
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createPDF(stringArrayList, rootPath+"/file.pdf");
+
             }
         });
 
@@ -50,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
                 document.add(new Paragraph(string));
             }
             document.close();
+            Toast.makeText(this, "PDF Created at "+ rootPath, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             e.printStackTrace();
         }
