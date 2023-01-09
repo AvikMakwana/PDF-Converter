@@ -20,26 +20,28 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Create Arraylist
         ArrayList<String> stringArrayList = new ArrayList<>();
         stringArrayList.add("This is line 1 of the PDF file.");
         stringArrayList.add("This is line 2 of the PDF file.");
         stringArrayList.add("This is line 3 of the PDF file.");
 
+        // File Path to save PDF file
         String rootPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download";
 
+        // You can also create no. of file by generating unique name everytime or go with Custom Name
         findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 createPDF(stringArrayList, rootPath+"/file.pdf");
-
             }
         });
 
 
     }
 
+    // Function to create PDF
     private void createPDF(ArrayList<String> stringArrayList, String filePath) {
-
         Document document = new Document();
         try {
             PdfWriter.getInstance(document, new FileOutputStream(filePath));
